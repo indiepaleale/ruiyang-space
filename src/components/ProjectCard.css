@@ -1,0 +1,51 @@
+.project-card {
+    width: 150px;
+    height: 50px;
+    border: 5px solid #000;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), height 0.6s cubic-bezier(0.4, 0, 0.2, 1), margin 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+.project-card.expanded {
+    width: 300px;
+    height: 200px;
+    margin-left: -75px; /* Offset half of the width increase */
+    margin-top: -75px;  /* Offset half of the height increase */
+}
+
+.project-content {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.hover-content, .card-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition-property: opacity;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fade-in {
+    opacity: 1;
+    transition-duration: 2s; /* Slow fade-in */
+}
+
+.fade-out {
+    opacity: 0;
+    z-index: 0;
+    transition-duration: 0.25s; /* Fast fade-out */
+}
