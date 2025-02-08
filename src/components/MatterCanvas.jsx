@@ -9,10 +9,6 @@ const MatterCanvas = forwardRef((props, ref) => {
     const matterRef = useRef();
     const containerRef = props.containerRef;
 
-    const canvas2Ref = useRef();
-
-    canvas2Ref.current = document.createElement('canvas');
-
     const updateGround = useRef();
     const tick = useRef();
 
@@ -26,7 +22,7 @@ const MatterCanvas = forwardRef((props, ref) => {
             }
         },
         canvasRef: canvasRef.current,
-        canvas2Ref: canvas2Ref.current,
+
     }));
 
 
@@ -48,7 +44,7 @@ const MatterCanvas = forwardRef((props, ref) => {
 
         let engine = Engine.create({ gravity: { x: -1, y: 0 } });
         let world = engine.world;
-        let render1 = Render.create({
+        let render = Render.create({
             element: containerRef.current,
             canvas: canvasRef.current,
             engine: engine,
@@ -59,20 +55,9 @@ const MatterCanvas = forwardRef((props, ref) => {
                 background: 'black',
             }
         });
-        let render2 = Render.create({
-            element: containerRef.current,
-            canvas: canvas2Ref.current,
-            engine: engine,
-            options: {
-                width: window.innerWidth,
-                height: window.innerHeight,
-                wireframes: false,
-                background: 'black',
-            }
-        });
 
-        let width = canvas2Ref.current.width;
-        let height = canvas2Ref.current.height;
+        let width = canvasRef.current.width;
+        let height = canvasRef.current.height;
         let ground = containerRef.current.getBoundingClientRect().x;
         const boundWidth = 100;
 
@@ -100,11 +85,11 @@ const MatterCanvas = forwardRef((props, ref) => {
             width = window.innerWidth;
             height = window.innerHeight;
             ground = containerRef.current.getBoundingClientRect().x;
-            render1.options.width = width;
-            render1.options.height = height;
-            render1.canvas.width = width;
-            render1.canvas.height = height;
-            Render.setPixelRatio(render1, window.devicePixelRatio);
+            render.options.width = width;
+            render.options.height = height;
+            render.canvas.width = width;
+            render.canvas.height = height;
+            Render.setPixelRatio(render, window.devicePixelRatio);
 
 
             Body.setPosition(bounds[0], { x: width, y: -boundWidth / 2 });
@@ -113,7 +98,7 @@ const MatterCanvas = forwardRef((props, ref) => {
             Body.setPosition(bounds[3], { x: width * 2, y: height / 2 });
 
 
-            Render.lookAt(render1, {
+            Render.lookAt(render, {
                 min: { x: 0, y: 0 },
                 max: { x: window.innerWidth, y: window.innerHeight }
             });
@@ -127,8 +112,7 @@ const MatterCanvas = forwardRef((props, ref) => {
 
         tick.current = (delta) => {
             Engine.update(engine, delta);
-            Render.world(render1);
-            Render.world(render2);
+            Render.world(render);
         };
 
 
@@ -139,7 +123,7 @@ const MatterCanvas = forwardRef((props, ref) => {
         // Cleanup event listener on component unmount
         return () => {
             window.removeEventListener('resize', handleResize);
-            Render.stop(render1);
+            Render.stop(render);
             Runner.stop(runner);
             Composite.clear(engine.world);
             Engine.clear(engine);
@@ -148,19 +132,7 @@ const MatterCanvas = forwardRef((props, ref) => {
     }, []);
 
     return (
-        <div>
-            <div className='layer1'>
-                <div className="background-text">LAYER1</div>
-                <canvas className="matter-canvas" id="mask-canvas" ref={canvasRef}></canvas>
-            </div>
-            {/* <div className='layer2'>
-                <div>LAYER2</div>
-                <canvas className="matter-canvas" id="mask-canvas" ref={canvasRef}></canvas>
-
-            </div> */}
-        </div>
-
-
+        <canvas className="matter-canvas" id="mask-canvas" ref={canvasRef}></canvas>
     )
 
 });
