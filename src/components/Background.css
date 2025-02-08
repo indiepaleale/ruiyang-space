@@ -1,0 +1,43 @@
+.page-right {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    z-index: -1;
+}
+
+.layer1,
+.layer2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: transparent;
+    isolation: isolate;
+}
+.matter-canvas {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    mix-blend-mode:exclusion ;
+}
+
+.background-text{
+    position: absolute;
+    top: 100%;
+    left: 100%;
+    top: 0;
+    left: 0;
+    font-size: 400px;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+}

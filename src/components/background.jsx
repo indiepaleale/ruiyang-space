@@ -1,48 +1,50 @@
 import React, { useEffect, useRef } from "react";
-import p5 from "p5";
+import MatterCanvas from "./MatterCanvas";
+import "./Background.css";
+import { use } from "matter-js";
 
+const Background = () => {
+    const matterContainer = useRef();
 
-export default function P5Background() {
-    const renderRef = useRef();
-
-    const sketch = (p) => {
-        const gap = 5;
-        let x = 0;
-        let vx = p.random(0,20);
-        let y = 0;
-        let vy = p.random(0,20);
-
-        p.setup = () => {
-            p.createCanvas(p.windowWidth, p.windowHeight).parent(renderRef.current);;
-            p.background(20);
-        };
-
-        p.draw = () => {
-            p.background(20);
-            p.ellipse(x, y, 5, 5);
-
-            if (x > p.width || x < 0) vx *= -1;
-            if (y > p.height || y < 0) vy *= -1;
-
-            x += vx;
-            y += vy;
-
-        }
-
-        p.windowResized = () => {
-            p.resizeCanvas(p.windowWidth, p.windowHeight);
-        };
-    };
+    const childRef = useRef();
 
 
     useEffect(() => {
-        new p5(sketch);
+        const resizeObserver = new ResizeObserver((entries) => {
+            for (let e of entries) {
+                if (e.target === matterContainer.current) {
+                    const groundNew = matterContainer.current.getBoundingClientRect().x;
+                    if (childRef.current) {
+                        childRef.current.updateGround(groundNew);
+                    }
+                }
+            }
+        });
+
+        resizeObserver.observe(matterContainer.current);
+
+        const update = (delta) => {
+            if (childRef.current) {
+                childRef.current.tick(8.33333);
+            }
+
+
+            requestAnimationFrame(() => update(delta));
+        }
+        update();
+
+        return () => {
+            resizeObserver.disconnect();
+        };
     }, []);
 
-    return (
-        <div
-            className="p5"
-            ref={renderRef}></div>
-    );
 
+    return (
+        <div className='page-right' ref={matterContainer}>
+            <MatterCanvas ref={childRef} containerRef={matterContainer} />
+
+        </div>
+    );
 }
+
+export default Background;
