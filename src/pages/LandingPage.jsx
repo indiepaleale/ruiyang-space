@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Panel from '../components/Panel';
-import Background from '../components/background';
-import PhysicsBox from '../components/PhysicsBox';
+import Background from '../components/Background';
+import './LandingPage.css';
 
 export default function LandingPage() {
 
