@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import p5 from "p5";
 import Matter from "matter-js";
 import "./PhysicsBox.css";
+import fontUrl from "../assets/SpaceGrotesk-Bold.ttf";
+import { img } from "motion/react-client";
 
 const PhysicsBox = () => {
     const containerRef = React.useRef();
@@ -41,36 +43,80 @@ const PhysicsBox = () => {
             Bodies.rectangle(width * 2, height / 2, boundWidth, height * 1.5, { isStatic: true }) //right
         ];
 
-        for (let i = 0; i < 10; i++) {
-            shapes.push(Bodies.circle(Math.random() * width * 2, Math.random() * height, 80, { restitution: 0.5 }));
+        for (let i = 0; i < 25; i++) {
+            shapes.push(Bodies.circle(Math.random() * width * 2, Math.random() * height, Math.random() *180+20, { restitution: 0.5 }));
         }
-        //shapes.push(Bodies.circle(400, 200, 80, { restitution: 0.9 }));
 
         Composite.add(world, [...bounds, ...shapes]);
 
         const sketch = (p) => {
 
+            let img1;
+            let layerText1;
+            let layerText2;
+            let layerMask;
+            let font;
+
+            const drawText = (ctx, text) => {
+                ctx.background(0);
+                ctx.textSize(600);
+                ctx.textFont(font);
+                ctx.textAlign(p.LEFT, p.TOP);
+                ctx.fill(255);
+                ctx.text(text, 10, 0);
+            }
+
             p.preload = () => {
+                font = p.loadFont("src/assets/SpaceGrotesk-Bold.ttf", undefined, (err) => console.log(err));
             };
 
             p.setup = () => {
                 p.createCanvas(p.windowWidth, p.windowHeight, canvasRef.current);
                 canvasRef.current = p.canvas;
 
-                p.background(150);
+                p.background(0);
+                p.noStroke();
+                p.textFont(font);
+
+                layerText1 = p.createGraphics(p.width, p.height);
+                layerText2 = p.createGraphics(p.width, p.height);
+                layerMask = p.createGraphics(p.width, p.height);
+
+                drawText(layerText1, "Hello");
+                drawText(layerText2, "World");
+
+                img1 = p.createImage(p.width, p.height);
 
             };
 
             p.draw = () => {
-
-                p.background(120);
-                p.text(p.width + " x " + p.height, 10, 10);
-
                 Engine.update(engine, 16.666);
-                //p.ellipse(shapes[0].position.x, shapes[0].position.y, 160);
+
+                layerMask.clear();
+                layerMask.background(0,0,0,0);
+                // drawText(layerText1, "Hello");
+                // drawText(layerText2, "World");
+
+                layerMask.fill('yellow');
+                layerMask.push();
+                layerMask.translate(-ground, 0);
                 for (let shape of shapes) {
-                    p.ellipse(shape.position.x, shape.position.y, 160);
+                    layerMask.ellipse(shape.position.x, shape.position.y, shape.circleRadius * 2);
                 }
+                layerMask.pop();
+                p.background(0);
+                p.translate(ground, 0);
+                p.image(layerText1,0,0)
+                
+                
+                
+                img1.copy(layerText2, 0, 0, layerText1.width, layerText1.height, 0, 0, img1.width, img1.height);
+                img1.mask(layerMask);
+                img1.blend(layerMask, 0, 0, layerText1.width, layerText1.height, 0, 0, img1.width, img1.height,p.EXCLUSION);
+                p.image(img1, 0, 0);
+                // p.image(layerText1, 0, 0);
+
+                //p.ellipse(shapes[0].position.x, shapes[0].position.y, 160);
 
 
             }
@@ -80,6 +126,12 @@ const PhysicsBox = () => {
                 const height = window.innerHeight;
 
                 p.resizeCanvas(width, height);
+                layerText1.resizeCanvas(width, height);
+                layerText2.resizeCanvas(width, height);
+                drawText(layerText1, "Hello");
+                drawText(layerText2, "World");
+                layerMask.resizeCanvas(width, height);
+
                 ground = containerRef.current.getBoundingClientRect().x;
 
                 Body.setPosition(bounds[0], { x: width, y: -boundWidth / 2 });
