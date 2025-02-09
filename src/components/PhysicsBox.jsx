@@ -6,6 +6,7 @@ import fontUrl from "../assets/SpaceGrotesk-Bold.ttf";
 import { img } from "motion/react-client";
 
 const PhysicsBox = () => {
+    const p5InstanceRef = React.useRef();
     const containerRef = React.useRef();
     const canvasRef = React.useRef();
 
@@ -71,7 +72,7 @@ const PhysicsBox = () => {
             };
 
             p.setup = () => {
-                p.createCanvas(p.windowWidth, p.windowHeight, canvasRef.current);
+                p.createCanvas(p.windowWidth, p.windowHeight,p.WEBGL, canvasRef.current);
                 canvasRef.current = p.canvas;
 
                 p.background(0);
@@ -92,12 +93,16 @@ const PhysicsBox = () => {
             p.draw = () => {
                 Engine.update(engine, 16.666);
 
+                p.translate(-p.width / 2, -p.height / 2);
                 layerMask.clear();
                 layerMask.background(0,0,0,0);
+                layerMask.pixelDensity(4);
+                console.log(p.pixelDensity());
                 // drawText(layerText1, "Hello");
                 // drawText(layerText2, "World");
 
                 layerMask.fill('yellow');
+                layerMask.noStroke();
                 layerMask.push();
                 layerMask.translate(-ground, 0);
                 for (let shape of shapes) {
@@ -112,7 +117,7 @@ const PhysicsBox = () => {
                 
                 img1.copy(layerText2, 0, 0, layerText1.width, layerText1.height, 0, 0, img1.width, img1.height);
                 img1.mask(layerMask);
-                img1.blend(layerMask, 0, 0, layerText1.width, layerText1.height, 0, 0, img1.width, img1.height,p.EXCLUSION);
+                img1.blend(layerMask, 0, 0, layerText1.width, layerText1.height, 0, 0, img1.width, img1.height,p.DIFFERENCE);
                 p.image(img1, 0, 0);
                 // p.image(layerText1, 0, 0);
 
@@ -131,6 +136,7 @@ const PhysicsBox = () => {
                 drawText(layerText1, "Hello");
                 drawText(layerText2, "World");
                 layerMask.resizeCanvas(width, height);
+                img1 = p.createImage(p.width, p.height);
 
                 ground = containerRef.current.getBoundingClientRect().x;
 
@@ -156,12 +162,15 @@ const PhysicsBox = () => {
 
         };
 
-        const myP5 = new p5(sketch, containerRef.current);
+        p5InstanceRef.current = new p5(sketch, containerRef.current);
         window.addEventListener('resize', resizeHandler);
         resizeObserver.observe(containerRef.current);
 
         return () => {
-            myP5.remove();
+            if(p5InstanceRef.current) {
+                p5InstanceRef.current.remove();
+                p5InstanceRef.current = null;
+            }
             window.removeEventListener('resize', resizeHandler);
             resizeObserver.disconnect();
 
