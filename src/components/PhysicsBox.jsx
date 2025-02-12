@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import p5 from "p5";
 import Matter from "matter-js";
-import "./PhysicsBox.css";
-import fontUrl from "../assets/SpaceGrotesk-Bold.ttf";
-import { img } from "motion/react-client";
+import "../styles/PhysicsBox.css";
 
 const PhysicsBox = () => {
     const p5InstanceRef = React.useRef();
@@ -82,6 +80,9 @@ const PhysicsBox = () => {
                 layerText1 = p.createGraphics(p.width, p.height);
                 layerText2 = p.createGraphics(p.width, p.height);
                 layerMask = p.createGraphics(p.width, p.height);
+                layerMask.pixelDensity(2);
+                layerText1.pixelDensity(2);
+                layerText2.pixelDensity(2);
 
                 drawText(layerText1, "Hello");
                 drawText(layerText2, "World");
@@ -96,12 +97,10 @@ const PhysicsBox = () => {
                 p.translate(-p.width / 2, -p.height / 2);
                 layerMask.clear();
                 layerMask.background(0,0,0,0);
-                layerMask.pixelDensity(4);
-                console.log(p.pixelDensity());
                 // drawText(layerText1, "Hello");
                 // drawText(layerText2, "World");
 
-                layerMask.fill('yellow');
+                layerMask.fill('pink');
                 layerMask.noStroke();
                 layerMask.push();
                 layerMask.translate(-ground, 0);

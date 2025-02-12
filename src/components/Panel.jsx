@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/Panel.css";
 
 export default function Panel() {
     const [isHovered, setIsHovered] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Panel from '../components/Panel';
 import Background from '../components/Background';
-import './LandingPage.css';
+import '../styles/LandingPage.css';
 
 export default function LandingPage() {
 
