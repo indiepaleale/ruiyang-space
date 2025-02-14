@@ -1,0 +1,10 @@
+.about-page{
+    width: 300px;
+    height: 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content:baseline;
+    padding: 20px;
+    background-color: #ffffff;
+}
