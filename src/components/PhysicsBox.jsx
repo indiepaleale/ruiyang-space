@@ -42,8 +42,8 @@ const PhysicsBox = () => {
             Bodies.rectangle(width * 2, height / 2, boundWidth, height * 1.5, { isStatic: true }) //right
         ];
 
-        for (let i = 0; i < 25; i++) {
-            shapes.push(Bodies.circle(Math.random() * width * 2, Math.random() * height, Math.random() *180+20, { restitution: 0.5 }));
+        for (let i = 0; i < 20; i++) {
+            shapes.push(Bodies.circle(Math.random() * width * 2, Math.random() * height, Math.random() * 100 + 50, { restitution: 0.5 }));
         }
 
         Composite.add(world, [...bounds, ...shapes]);
@@ -56,13 +56,13 @@ const PhysicsBox = () => {
             let layerMask;
             let font;
 
-            const drawText = (ctx, text) => {
-                ctx.background(0);
-                ctx.textSize(600);
+            const drawText = (ctx, text, yOff) => {
+                ctx.background(255);
+                ctx.textSize(360);
                 ctx.textFont(font);
-                ctx.textAlign(p.LEFT, p.TOP);
-                ctx.fill(255);
-                ctx.text(text, 10, 0);
+                ctx.textAlign(p.LEFT, p.BASELINE);
+                ctx.fill(0);
+                ctx.text(text, 10, yOff);
             }
 
             p.preload = () => {
@@ -70,10 +70,10 @@ const PhysicsBox = () => {
             };
 
             p.setup = () => {
-                p.createCanvas(p.windowWidth, p.windowHeight,p.WEBGL, canvasRef.current);
+                p.createCanvas(p.windowWidth, p.windowHeight, p.WEBGL, canvasRef.current);
                 canvasRef.current = p.canvas;
 
-                p.background(0);
+                p.background(255);
                 p.noStroke();
                 p.textFont(font);
 
@@ -84,8 +84,7 @@ const PhysicsBox = () => {
                 layerText1.pixelDensity(2);
                 layerText2.pixelDensity(2);
 
-                drawText(layerText1, "Hello");
-                drawText(layerText2, "World");
+                drawTextLayer();
 
                 img1 = p.createImage(p.width, p.height);
 
@@ -96,7 +95,7 @@ const PhysicsBox = () => {
 
                 p.translate(-p.width / 2, -p.height / 2);
                 layerMask.clear();
-                layerMask.background(0,0,0,0);
+                layerMask.background(0, 0, 0, 0);
                 // drawText(layerText1, "Hello");
                 // drawText(layerText2, "World");
 
@@ -108,15 +107,15 @@ const PhysicsBox = () => {
                     layerMask.ellipse(shape.position.x, shape.position.y, shape.circleRadius * 2);
                 }
                 layerMask.pop();
-                p.background(0);
+                p.background(255);
                 p.translate(ground, 0);
-                p.image(layerText1,0,0)
-                
-                
-                
+                p.image(layerText1, 0, 0)
+
+
+
                 img1.copy(layerText2, 0, 0, layerText1.width, layerText1.height, 0, 0, img1.width, img1.height);
                 img1.mask(layerMask);
-                img1.blend(layerMask, 0, 0, layerText1.width, layerText1.height, 0, 0, img1.width, img1.height,p.DIFFERENCE);
+                img1.blend(layerMask, 0, 0, layerText1.width, layerText1.height, 0, 0, img1.width, img1.height, p.DIFFERENCE);
                 p.image(img1, 0, 0);
                 // p.image(layerText1, 0, 0);
 
@@ -132,8 +131,8 @@ const PhysicsBox = () => {
                 p.resizeCanvas(width, height);
                 layerText1.resizeCanvas(width, height);
                 layerText2.resizeCanvas(width, height);
-                drawText(layerText1, "Hello");
-                drawText(layerText2, "World");
+
+                drawTextLayer();
                 layerMask.resizeCanvas(width, height);
                 img1 = p.createImage(p.width, p.height);
 
@@ -144,6 +143,12 @@ const PhysicsBox = () => {
                 Body.setPosition(bounds[2], { x: ground - boundWidth / 2, y: height / 2 });
                 Body.setPosition(bounds[3], { x: width * 2, y: height / 2 });
             }
+
+            const drawTextLayer = () => {
+                drawText(layerText1, "Ruiyang", layerText1.height / 2);
+                drawText(layerText2, "Wang", layerText2.height / 2);
+            }
+
 
             const updateGround = () => {
                 if (!bounds[2]) return;
@@ -166,7 +171,7 @@ const PhysicsBox = () => {
         resizeObserver.observe(containerRef.current);
 
         return () => {
-            if(p5InstanceRef.current) {
+            if (p5InstanceRef.current) {
                 p5InstanceRef.current.remove();
                 p5InstanceRef.current = null;
             }
