@@ -7,7 +7,7 @@ const PanelAnimatedBox = ({ children }) => {
         <motion.div
             initial={{ width: 0 }}
             animate={{ width: "auto" }}
-            exit={{ width: 'px', opacity: 0, transition: { duration: 3 } }}
+            exit={{ width: '0px', opacity: 0,transition: { duration: 0.1 } }}
             transition={{ duration: 0.3 }}
             className="panel-animated-box"
         >

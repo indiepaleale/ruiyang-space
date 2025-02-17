@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
+import { Link, Routes, Route, useRoutes } from "react-router-dom";
+import { motion } from "motion/react";
 import "../styles/ProjectCard.css";
 
-const ProjectCard = ({ title, description }) => {
+const ProjectCard = ({ title, description, path, expanded }) => {
     const [isHovered, setIsHovered] = useState(false);
     const hoverTimeout = useRef(null);
 
@@ -21,13 +23,22 @@ const ProjectCard = ({ title, description }) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <div className={`project-title-bar ${isHovered ? "collapsed" : ""}`}>
-                <h2>{title}</h2>
-                <p>{description}</p>
-            </div>
+            <Link to={path} className="project-header">
+                <div className={`project-title-bar ${isHovered ? "collapsed" : ""}`}>
+                    <h2>{title}</h2>
+                    <p>{description}</p>
+                </div>
+                <div className={`project-title-bar link ${!isHovered ? "collapsed" : ""}`}>
+                    <h2>Read More</h2>
+                </div>
+            </Link>
 
-            <div className={`project-content ${isHovered ? "expanded" : ""}`}>
-            </div>
+
+            <motion.div
+                className={`project-content ${isHovered ? "hovered" : ""} ${expanded ? "expanded" : ""}`}
+            >
+                
+            </motion.div>
 
         </div>
     )

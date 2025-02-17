@@ -66,7 +66,7 @@ const PhysicsBox = () => {
             }
 
             p.preload = () => {
-                font = p.loadFont("src/assets/SpaceGrotesk-Bold.ttf", undefined, (err) => console.log(err));
+                font = p.loadFont("/src/assets/SpaceGrotesk-Bold.ttf", undefined, (err) => console.log(err));
             };
 
             p.setup = () => {
@@ -111,8 +111,6 @@ const PhysicsBox = () => {
                 p.translate(ground, 0);
                 p.image(layerText1, 0, 0)
 
-
-
                 img1.copy(layerText2, 0, 0, layerText1.width, layerText1.height, 0, 0, img1.width, img1.height);
                 img1.mask(layerMask);
                 img1.blend(layerMask, 0, 0, layerText1.width, layerText1.height, 0, 0, img1.width, img1.height, p.DIFFERENCE);
@@ -120,8 +118,6 @@ const PhysicsBox = () => {
                 // p.image(layerText1, 0, 0);
 
                 //p.ellipse(shapes[0].position.x, shapes[0].position.y, 160);
-
-
             }
 
             resizeHandler = () => {
@@ -148,7 +144,6 @@ const PhysicsBox = () => {
                 drawText(layerText1, "Ruiyang", layerText1.height / 2);
                 drawText(layerText2, "Wang", layerText2.height / 2);
             }
-
 
             const updateGround = () => {
                 if (!bounds[2]) return;
@@ -177,7 +172,6 @@ const PhysicsBox = () => {
             }
             window.removeEventListener('resize', resizeHandler);
             resizeObserver.disconnect();
-
         };
     }, []);
 

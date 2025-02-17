@@ -2,17 +2,26 @@ import React from "react";
 import PanelAnimatedBox from "../components/PanelAnimatedBox";
 import ProjectCard from "../components/ProjectCard";
 import projects from "../data/projects";
+import { useLocation } from "react-router-dom";
 import "../styles/ProjectPage.css";
 
-console.log('projects', projects);
-
 const ProjectPage = () => {
+    const location = useLocation();
     return (
-        <div className="project-page">
-            {projects.map((project) => (
-                <ProjectCard key={project.index} title={project.title} description={project.description} />
-            ))}
-        </div>
+        <PanelAnimatedBox>
+            <div className="project-page">
+                {projects.map((project) => (
+                    <ProjectCard
+                        key={project.index}
+                        path={project.path}
+                        title={project.title}
+                        description={project.description} 
+                        expanded={location.pathname === project.path}
+                        />
+                ))}
+
+            </div>
+        </PanelAnimatedBox>
     );
 };
 

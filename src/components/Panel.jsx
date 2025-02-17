@@ -1,30 +1,34 @@
 import React, { useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./header";
 import ProjectPage from "../pages/ProjectPage";
 import AboutPage from "../pages/AboutPage";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import "../styles/Panel.css";
 import PanelAnimatedBox from "./PanelAnimatedBox";
 
 const views = [
-    { key: '1', headerItem: "Home", content: null },
-    { key: '2', headerItem: "Projects", content: <ProjectPage /> },
-    { key: '3', headerItem: "About", content: <AboutPage /> },
+    { key: 'home', headerItem: "Home", path: "/", content: null },
+    { key: 'projects', headerItem: "Projects", path: "/project/*", content: <ProjectPage /> },
+    { key: 'about', headerItem: "About", path: "/about", content: <AboutPage /> },
 ];
 
 export default function Panel() {
-    const [currentView, setCurrentView] = useState("home");
+    const location = useLocation();
 
     return (
         <div className={`page-left`}>
-            <Header items={views} selectedItem={currentView} onSelect={setCurrentView} />
+            <Header location={location} />
             <AnimatePresence mode="wait">
-                {views.map((view, index) => (
-                    currentView === view.headerItem.toLowerCase() &&
-                    <PanelAnimatedBox key={view.key}>
-                        {view.content}
-                    </PanelAnimatedBox>
-                ))}
+                <Routes location={location} key={location.pathname}>
+                    {views.map((view, index) => (
+                        <Route
+                            key={view.key}
+                            path={view.path}
+                            element={view.content}>
+                        </Route>
+                    ))}
+                </Routes>
             </AnimatePresence>
 
         </div>

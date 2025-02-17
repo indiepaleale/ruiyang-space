@@ -7,11 +7,13 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 2;
 }
+
 .logo {
     position: relative;
     width: 100%;
     min-width: 100px;
     height: auto;
+    margin-bottom: auto;
     aspect-ratio: 1 / 1;
     font-family: "Doto";
     font-size: 1.5rem;
@@ -23,6 +25,7 @@
     text-decoration: none;
     margin-right: auto;
     background-color: rgb(255, 255, 255);
+
 
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -55,8 +58,9 @@
 .hovered {
     color: black;
     background-color: #ffffff;
-    
+
 }
+
 .active {
     color: black;
     background-color: #ffffff;
