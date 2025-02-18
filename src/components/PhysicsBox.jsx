@@ -29,17 +29,17 @@ const PhysicsBox = () => {
         const shapes = [];
 
         let ground = containerRef.current.getBoundingClientRect().x; // x position of the left bound
-        const boundWidth = 100;
+        const boundWidth = 200;
 
-        const width = window.innerWidth;
+        const width = 3 * window.innerWidth;
         const height = window.innerHeight;
 
         // Matter.js Bodies
         const bounds = [
-            Bodies.rectangle(width, -boundWidth / 2, width * 3, boundWidth, { isStatic: true }), //top
-            Bodies.rectangle(width, height + boundWidth / 2, width * 3, boundWidth, { isStatic: true }), //bottom
+            Bodies.rectangle(width / 2, -boundWidth / 2, width, boundWidth, { isStatic: true }), //top
+            Bodies.rectangle(width / 2, height + boundWidth / 2, width, boundWidth, { isStatic: true }), //bottom
             Bodies.rectangle(ground - boundWidth / 2, height / 2, boundWidth, height * 1.5, { isStatic: true }), //left
-            Bodies.rectangle(width * 2, height / 2, boundWidth, height * 1.5, { isStatic: true }) //right
+            Bodies.rectangle(width + boundWidth / 2, height / 2, boundWidth, height * 1.5, { isStatic: true }) //right
         ];
 
         for (let i = 0; i < 20; i++) {
@@ -121,7 +121,7 @@ const PhysicsBox = () => {
             }
 
             resizeHandler = () => {
-                const width = window.innerWidth;
+                const width = 3 * window.innerWidth;
                 const height = window.innerHeight;
 
                 p.resizeCanvas(width, height);

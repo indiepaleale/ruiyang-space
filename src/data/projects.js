@@ -2,8 +2,8 @@ console.log('Projects data loaded');
 const projects = [
     {
         index: 1,
+        projectID: 'arems',
         title: 'Arems',
-        path: '/project/arems',
         description: 'This is a description of project 1',
         thumbnail: '../images/project1.jpg',
         content: '',
@@ -11,7 +11,7 @@ const projects = [
     {
         index: 2,
         title: 'AsfasTRT',
-        path: '/project/asfastrt',
+        projectID: 'asfastrt',
         description: 'This is a description of project 2',
         thumbnail: '../images/project2.jpg',
         content: '',
@@ -19,7 +19,7 @@ const projects = [
     {
         index: 3,
         title: 'Ssad-SD',
-        path: '/project/ssad-sd',
+        projectID: 'ssad-sd',
         description: 'This is a description of project 3',
         thumbnail: '../images/project3.jpg',
         content: '',
@@ -27,7 +27,7 @@ const projects = [
     {
         index: 4,
         title: 'Fasd-sdas',
-        path: '/project/fasd-sdas',
+        projectID: 'fasd-sdas',
         description: 'This is a description of project 4',
         thumbnail: '../images/project4.jpg',
         content: '',

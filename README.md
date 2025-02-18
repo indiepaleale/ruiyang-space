@@ -2,7 +2,7 @@ https://ruiyang.space
 
 ## Run
 ```sh 
-npm intall
+npm install
 ```
 ```sh 
 npm run dev

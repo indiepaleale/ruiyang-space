@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import '../styles/Header.css';
 
 const Header = ({ location }) => {
     return (
         <header className="header-nav">
-
-            <nav className='nav'>
-                <div className='logo'>Logo</div>
+            <div className='logo'>Logo</div>
+            <nav className='header-nav'>
                 <HeaderItem
                     path="/"
                     currentPath={location.pathname}
@@ -15,13 +14,13 @@ const Header = ({ location }) => {
                     Home
                 </HeaderItem>
                 <HeaderItem
-                    path="/Project"
+                    path="/projects"
                     currentPath={location.pathname}
                 >
                     Project
                 </HeaderItem>
                 <HeaderItem
-                    path="/About"
+                    path="/about"
                     currentPath={location.pathname}
                 >
                     About
@@ -34,14 +33,16 @@ const Header = ({ location }) => {
 
 export default Header;
 
-const HeaderItem = ({ children, currentPath, path }) => {
+const HeaderItem = ({ children, path }) => {
     const [isHovered, setIsHovered] = useState();
     return (
-        <Link to={path} className={`header-item ${isHovered ? 'hovered' : ''} ${currentPath === path ? 'active' : ''}`}
+        <NavLink
+            to={path}
+            className={`header-item ${isHovered ? 'hovered' : ''}`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             {children}
-        </Link>
+        </NavLink>
     );
 }

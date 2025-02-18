@@ -1,10 +1,18 @@
 import React from 'react';
-import LandingPage from './pages/LandingPage';
+import Panel from './components/Panel';
+import Background from './components/Background';
+import { BrowserRouter as Router } from 'react-router-dom';
+import './styles/LandingPage.css';
 
 export default function App() {
+
   return (
-    <div className="App">
-      <LandingPage />
+    <div className='landing-page'>
+      <Router>
+        <Panel />
+
+      </Router>
+      <Background />
     </div>
   );
-}
+};
