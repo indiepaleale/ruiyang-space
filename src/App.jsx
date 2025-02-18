@@ -8,7 +8,7 @@ export default function App() {
 
   return (
     <div className='landing-page'>
-      <Router>
+      <Router basename="/ruiyang-space">
         <Panel />
 
       </Router>

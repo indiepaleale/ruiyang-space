@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import p5 from "p5";
 import Matter from "matter-js";
 import "../styles/PhysicsBox.css";
+import fontImport from "../assets/SpaceGrotesk-Bold.ttf";
 
 const PhysicsBox = () => {
     const p5InstanceRef = React.useRef();
@@ -66,7 +67,7 @@ const PhysicsBox = () => {
             }
 
             p.preload = () => {
-                font = p.loadFont("/src/assets/SpaceGrotesk-Bold.ttf", undefined, (err) => console.log(err));
+                font = p.loadFont(fontImport, undefined, (err) => console.log(err));
             };
 
             p.setup = () => {
