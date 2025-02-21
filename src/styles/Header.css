@@ -16,9 +16,9 @@
     height: auto;
     margin-bottom: auto;
     aspect-ratio: 1 / 1;
-    font-family: "Doto";
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-family:"Libre Barcode 39";
+    font-size: 2rem;
+    font-weight: 400;
     display: flex;
     justify-content: center;
     align-items: center;

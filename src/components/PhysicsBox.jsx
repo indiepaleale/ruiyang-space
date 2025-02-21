@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import p5 from "p5";
 import Matter from "matter-js";
 import "../styles/PhysicsBox.css";
-import fontImport from "../assets/SpaceGrotesk-Bold.ttf";
+import fontImport from "../fonts/SpaceGrotesk-Bold.ttf";
 
 const PhysicsBox = () => {
-    const p5InstanceRef = React.useRef();
-    const containerRef = React.useRef();
-    const canvasRef = React.useRef();
+    const p5InstanceRef = useRef();
+    const containerRef = useRef();
+    const canvasRef = useRef();
 
     useEffect(() => {
         let resizeHandler = null;

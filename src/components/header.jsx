@@ -11,7 +11,7 @@ const Header = ({ location }) => {
                     path="/"
                     currentPath={location.pathname}
                 >
-                    Home
+                    s
                 </HeaderItem>
                 <HeaderItem
                     path="/projects"
